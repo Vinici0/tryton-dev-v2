@@ -8,3 +8,4 @@ trytond_sale>=8.0,<8.1
 trytond_purchase>=8.0,<8.1
 trytond_stock>=8.0,<8.1
 psycopg[binary,pool]>=3.1,<4
+proteus>=8.0,<8.1
