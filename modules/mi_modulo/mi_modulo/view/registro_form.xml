@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<form>
+    <label name="codigo"/>
+    <field name="codigo"/>
+    <label name="nombre"/>
+    <field name="nombre"/>
+    <label name="activo"/>
+    <field name="activo"/>
+    <separator id="sep_descripcion" string="Descripción" colspan="4"/>
+    <field name="descripcion" colspan="4"/>
+</form>

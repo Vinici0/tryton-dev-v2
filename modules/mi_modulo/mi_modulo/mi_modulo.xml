@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+
+        <!-- Vistas -->
+
+        <record model="ir.ui.view" id="registro_view_list">
+            <field name="model">mi_modulo.registro</field>
+            <field name="type">tree</field>
+            <field name="name">registro_list</field>
+        </record>
+
+        <record model="ir.ui.view" id="registro_view_form">
+            <field name="model">mi_modulo.registro</field>
+            <field name="type">form</field>
+            <field name="name">registro_form</field>
+        </record>
+
+        <!-- Acción -->
+
+        <record model="ir.action.act_window" id="act_registro">
+            <field name="name">Registros</field>
+            <field name="res_model">mi_modulo.registro</field>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_registro_view_list">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="registro_view_list"/>
+            <field name="act_window" ref="act_registro"/>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_registro_view_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="registro_view_form"/>
+            <field name="act_window" ref="act_registro"/>
+        </record>
+
+        <!-- Menú -->
+
+        <record model="ir.ui.menu" id="menu_mi_modulo">
+            <field name="name">Mi Módulo</field>
+            <field name="sequence" eval="50"/>
+            <field name="icon">tryton-star</field>
+        </record>
+
+        <record model="ir.ui.menu" id="menu_registro">
+            <field name="name">Registros</field>
+            <field name="parent" ref="menu_mi_modulo"/>
+            <field name="action" ref="act_registro"/>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <!-- Permisos -->
+
+        <record model="ir.model.access" id="access_registro_admin">
+            <field name="model">mi_modulo.registro</field>
+            <field name="group" search="[('name', '=', 'Administration')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+    </data>
+</tryton>

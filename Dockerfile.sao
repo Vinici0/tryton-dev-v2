@@ -1,0 +1,17 @@
+FROM node:20-bookworm-slim AS builder
+
+RUN apt-get update && apt-get install -y --no-install-recommends curl ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /sao
+
+RUN curl -fsSL https://downloads.tryton.org/8.0/tryton-sao-last.tgz \
+    | tar -xz --strip-components=1
+
+RUN npm install --legacy-peer-deps
+RUN npx grunt
+
+FROM nginx:1.26-bookworm
+COPY --from=builder /sao/ /usr/share/nginx/html/
+COPY nginx-sao.conf /etc/nginx/conf.d/default.conf
+EXPOSE 80

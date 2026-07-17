@@ -1,0 +1,10 @@
+trytond>=8.0,<8.1
+trytond_party>=8.0,<8.1
+trytond_company>=8.0,<8.1
+trytond_currency>=8.0,<8.1
+trytond_country>=8.0,<8.1
+trytond_product>=8.0,<8.1
+trytond_sale>=8.0,<8.1
+trytond_purchase>=8.0,<8.1
+trytond_stock>=8.0,<8.1
+psycopg[binary,pool]>=3.1,<4

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mi_modulo"
+version = "8.0.0"
+description = "Módulo de ejemplo para Tryton 8.0"
+requires-python = ">=3.10"
+dependencies = [
+    "trytond>=8.0,<8.1",
+]
+
+[project.entry-points."trytond.modules"]
+mi_modulo = "mi_modulo"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["mi_modulo*"]
+
+[tool.setuptools.package-data]
+mi_modulo = [
+    "tryton.cfg",
+    "*.xml",
+    "view/*.xml",
+    "locale/*.po",
+]
