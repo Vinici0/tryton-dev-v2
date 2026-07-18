@@ -41,3 +41,7 @@ docker compose exec tryton python3 -m unittest purchase_request.tests.SubtotalTe
 | Reiniciar | `docker compose restart tryton` |
 | BD | `docker compose exec postgres psql -U tryton -d tryton` |
 | Reset | `./scripts/reset-environment.sh` |
+
+<img width="1700" height="309" alt="image" src="https://github.com/user-attachments/assets/359dfe0c-990d-410e-8173-f3177fac517a" />
+<img width="1701" height="552" alt="image" src="https://github.com/user-attachments/assets/00f43431-8ab5-49cb-8ea1-3d5283742f83" />
+
