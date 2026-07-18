@@ -35,7 +35,7 @@ services:
       - ./modules:/app/modules
       - ./docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh:ro
     ports:
-      - "${TRYTON_PORT}:${TRYTON_PORT}"
+      - "127.0.0.1:${TRYTON_PORT}:${TRYTON_PORT}"
     depends_on:
       postgres:
         condition: service_healthy
@@ -46,7 +46,7 @@ services:
       dockerfile: Dockerfile.sao
     restart: unless-stopped
     ports:
-      - "8001:80"
+      - "127.0.0.1:8001:80"
     depends_on:
       - tryton
 
