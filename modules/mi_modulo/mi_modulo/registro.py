@@ -8,6 +8,7 @@ class Registro(ModelSQL, ModelView):
 
     codigo = fields.Char("Código", required=True)
     nombre = fields.Char("Nombre", required=True)
+    apellido = fields.Char("Apellido")
     descripcion = fields.Text("Descripción")
     activo = fields.Boolean("Activo")
 

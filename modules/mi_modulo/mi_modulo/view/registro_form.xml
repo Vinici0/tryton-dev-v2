@@ -4,6 +4,8 @@
     <field name="codigo"/>
     <label name="nombre"/>
     <field name="nombre"/>
+    <label name="apellido"/> 
+    <field name="apellido"/>
     <label name="activo"/>
     <field name="activo"/>
     <separator id="sep_descripcion" string="Descripción" colspan="4"/>

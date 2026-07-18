@@ -2,5 +2,6 @@
 <tree>
     <field name="codigo"/>
     <field name="nombre"/>
+    <field name="apellido"/>
     <field name="activo"/>
 </tree>
