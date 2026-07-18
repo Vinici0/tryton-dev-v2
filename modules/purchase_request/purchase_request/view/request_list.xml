@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<tree>
+    <field name="number"/>
+    <field name="date"/>
+    <field name="party"/>
+    <field name="department"/>
+    <field name="supplier"/>
+    <field name="subtotal"/>
+    <field name="state" widget="selection"/>
+    <field name="approved_by"/>
+    <field name="approved_date"/>
+</tree>

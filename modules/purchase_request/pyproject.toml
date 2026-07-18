@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "purchase_request"
+version = "8.0.0"
+description = "Gestión de Solicitudes de Compra - Tryton 8.0"
+requires-python = ">=3.10"
+dependencies = [
+    "trytond>=8.0,<8.1",
+]
+
+[project.entry-points."trytond.modules"]
+purchase_request = "purchase_request"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["purchase_request*"]
+
+[tool.setuptools.package-data]
+purchase_request = [
+    "tryton.cfg",
+    "*.xml",
+    "view/*.xml",
+]

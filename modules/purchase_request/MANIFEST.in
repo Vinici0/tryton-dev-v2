@@ -1,0 +1,1 @@
+recursive-include purchase_request *.xml *.po *.cfg

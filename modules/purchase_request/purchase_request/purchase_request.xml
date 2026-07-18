@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+
+        <!-- Secuencia -->
+
+        <record model="ir.sequence.type" id="sequence_type_purchase_request">
+            <field name="name">Solicitud de Compra</field>
+        </record>
+
+        <record model="ir.sequence" id="sequence_purchase_request">
+            <field name="name">Solicitud de Compra</field>
+            <field name="sequence_type" ref="sequence_type_purchase_request"/>
+            <field name="prefix">SC-</field>
+            <field name="padding">6</field>
+        </record>
+
+        <!-- Vistas - Solicitud -->
+
+        <record model="ir.ui.view" id="request_view_list">
+            <field name="model">purchase.request</field>
+            <field name="type">tree</field>
+            <field name="name">request_list</field>
+        </record>
+
+        <record model="ir.ui.view" id="request_view_form">
+            <field name="model">purchase.request</field>
+            <field name="type">form</field>
+            <field name="name">request_form</field>
+        </record>
+
+        <!-- Vistas - Líneas -->
+
+        <record model="ir.ui.view" id="request_line_view_list">
+            <field name="model">purchase.request.line</field>
+            <field name="type">tree</field>
+            <field name="name">request_line_list</field>
+        </record>
+
+        <!-- Acción -->
+
+        <record model="ir.action.act_window" id="act_purchase_request">
+            <field name="name">Solicitudes de Compra</field>
+            <field name="res_model">purchase.request</field>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_purchase_request_view_list">
+            <field name="sequence" eval="10"/>
+            <field name="view" ref="request_view_list"/>
+            <field name="act_window" ref="act_purchase_request"/>
+        </record>
+
+        <record model="ir.action.act_window.view" id="act_purchase_request_view_form">
+            <field name="sequence" eval="20"/>
+            <field name="view" ref="request_view_form"/>
+            <field name="act_window" ref="act_purchase_request"/>
+        </record>
+
+        <!-- Menú -->
+
+        <record model="ir.ui.menu" id="menu_purchase_request_root">
+            <field name="name">Gestión de Compras</field>
+            <field name="sequence" eval="40"/>
+            <field name="icon">tryton-star</field>
+        </record>
+
+        <record model="ir.ui.menu" id="menu_purchase_request">
+            <field name="name">Solicitudes de Compra</field>
+            <field name="parent" ref="menu_purchase_request_root"/>
+            <field name="action" ref="act_purchase_request"/>
+            <field name="sequence" eval="10"/>
+        </record>
+
+        <!-- Permisos - Administración -->
+
+        <record model="ir.model.access" id="access_purchase_request_admin">
+            <field name="model">purchase.request</field>
+            <field name="group" search="[('name', '=', 'Administration')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.model.access" id="access_purchase_request_line_admin">
+            <field name="model">purchase.request.line</field>
+            <field name="group" search="[('name', '=', 'Administration')]"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <!-- Grupos de usuario -->
+
+        <record model="res.group" id="group_requester">
+            <field name="name">Solicitante</field>
+        </record>
+
+        <record model="res.group" id="group_approver">
+            <field name="name">Aprobador de Compras</field>
+        </record>
+
+        <!-- Permisos - Solicitante -->
+
+        <record model="ir.model.access" id="access_purchase_request_requester">
+            <field name="model">purchase.request</field>
+            <field name="group" ref="group_requester"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <record model="ir.model.access" id="access_purchase_request_line_requester">
+            <field name="model">purchase.request.line</field>
+            <field name="group" ref="group_requester"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_delete" eval="True"/>
+        </record>
+
+        <!-- Permisos - Aprobador (solo lectura y escritura en estado enviado) -->
+
+        <record model="ir.model.access" id="access_purchase_request_approver">
+            <field name="model">purchase.request</field>
+            <field name="group" ref="group_approver"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+        <record model="ir.model.access" id="access_purchase_request_line_approver">
+            <field name="model">purchase.request.line</field>
+            <field name="group" ref="group_approver"/>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="False"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_delete" eval="False"/>
+        </record>
+
+    </data>
+</tryton>

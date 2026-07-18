@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<form>
+    <label name="number"/>
+    <field name="number"/>
+    <label name="state"/>
+    <field name="state" widget="selection"/>
+    <label name="date"/>
+    <field name="date"/>
+    <label name="party"/>
+    <field name="party"/>
+    <label name="department"/>
+    <field name="department"/>
+    <label name="supplier"/>
+    <field name="supplier"/>
+
+    <notebook colspan="4">
+
+        <page id="page_lines" string="Productos">
+            <field name="lines" colspan="4" mode="tree,form"/>
+            <group id="totals" colspan="4" col="4">
+                <label id="lbl_spacer" string="" colspan="2"/>
+                <label name="subtotal"/>
+                <field name="subtotal"/>
+            </group>
+        </page>
+
+        <page id="page_description" string="Justificación">
+            <field name="description" colspan="4"/>
+        </page>
+
+        <page id="page_approval" string="Aprobación">
+            <label name="approved_by"/>
+            <field name="approved_by"/>
+            <label name="approved_date"/>
+            <field name="approved_date"/>
+            <label name="rejection_reason"/>
+            <field name="rejection_reason" colspan="4"/>
+        </page>
+
+    </notebook>
+
+    <group id="buttons" colspan="4" col="6">
+        <button name="submit" string="Enviar" icon="tryton-forward"/>
+        <button name="approve" string="Aprobar" icon="tryton-ok"/>
+        <button name="reject" string="Rechazar" icon="tryton-cancel"/>
+        <button name="mark_processed" string="Marcar Atendida" icon="tryton-ok"/>
+        <button name="reset_to_draft" string="Regresar a Borrador" icon="tryton-back"/>
+        <button name="cancel" string="Cancelar" icon="tryton-cancel"/>
+    </group>
+</form>

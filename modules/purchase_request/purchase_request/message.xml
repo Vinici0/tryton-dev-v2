@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<tryton>
+    <data>
+        <record model="ir.message" id="msg_lines_required">
+            <field name="text">La solicitud debe tener al menos un producto.</field>
+        </record>
+        <record model="ir.message" id="msg_rejection_reason_required">
+            <field name="text">Debe ingresar un motivo de rechazo.</field>
+        </record>
+        <record model="ir.message" id="msg_delete_draft_only">
+            <field name="text">Solo se pueden eliminar solicitudes en estado Borrador.</field>
+        </record>
+    </data>
+</tryton>
