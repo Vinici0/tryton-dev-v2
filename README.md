@@ -5,7 +5,7 @@ PostgreSQL 16 + trytond 8.0.7 + SAO (cliente web).
 ## Setup
 
 ```bash
-cp .env.example .env                       # edita las passwords
+cp .env.example .env
 docker compose build
 docker compose up -d postgres
 docker compose run --rm tryton trytond-admin -c /etc/trytond.conf -d tryton --all
@@ -23,8 +23,14 @@ UI → **http://localhost:8001** | DB: `tryton` | User: `admin`
 Solicitudes de compra con flujo de aprobación: **Borrador → Enviada → Aprobada → Atendida**
 
 ```bash
-./scripts/install-module.sh purchase_request   # primera vez
-./scripts/update-module.sh purchase_request    # tras cambios
+./scripts/install-module.sh purchase_request
+./scripts/update-module.sh purchase_request
+```
+
+## Tests
+
+```bash
+docker compose exec tryton python3 -m unittest purchase_request.tests.SubtotalTestCase -v
 ```
 
 ## Comandos
