@@ -1,4 +1,13 @@
 .env
+nginx-server.conf
+
+# Documentación local
+ENTREVISTA_TECNICA.md
+INCIDENCIAS.md
+CREAR_MODULO.md
+AGREGAR_CAMPO.md
+README copy.md
+
 __pycache__/
 *.pyc
 *.pyo

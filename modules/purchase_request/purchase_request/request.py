@@ -8,6 +8,7 @@ from trytond.pool import Pool
 from trytond.pyson import Eval
 from trytond.transaction import Transaction
 
+# Estados posibles de una solicitud de compra
 STATES = [
     ('draft', 'Borrador'),
     ('submitted', 'Enviada'),
@@ -17,6 +18,7 @@ STATES = [
     ('cancelled', 'Cancelada'),
 ]
 
+# PYSON reutilizable: todos los campos se bloquean al salir de Borrador
 _READONLY = {'readonly': Eval('state') != 'draft'}
 
 
@@ -32,8 +34,10 @@ class PurchaseRequest(ModelSQL, ModelView):
     supplier = fields.Many2One(
         'party.party', "Proveedor Sugerido", states=_READONLY)
     description = fields.Text("Justificación", states=_READONLY)
+    # One2Many inverso del Many2One 'request' en PurchaseRequestLine
     lines = fields.One2Many(
         'purchase.request.line', 'request', "Productos", states=_READONLY)
+    # Campo calculado: suma los subtotales de todas las líneas
     subtotal = fields.Function(
         fields.Numeric("Total", digits=(16, 2)), 'get_subtotal')
     state = fields.Selection(STATES, "Estado", required=True, readonly=True)
@@ -58,6 +62,7 @@ class PurchaseRequest(ModelSQL, ModelView):
     def __setup__(cls):
         super().__setup__()
         cls._order = [('date', 'DESC'), ('id', 'DESC')]
+        # Visibilidad de botones controlada por PYSON según el estado actual
         cls._buttons.update({
             'submit': {
                 'invisible': Eval('state') != 'draft',
@@ -87,10 +92,13 @@ class PurchaseRequest(ModelSQL, ModelView):
 
     @classmethod
     def get_rec_name(cls, records, name):
+        # El nombre visible del registro en relaciones y búsquedas
         return {r.id: r.number or str(r.id) for r in records}
 
     @classmethod
     def get_subtotal(cls, requests, name):
+        # Getter en batch: recibe todos los registros a la vez para evitar
+        # una query por registro
         result = {}
         for request in requests:
             result[request.id] = sum(
@@ -104,6 +112,7 @@ class PurchaseRequest(ModelSQL, ModelView):
         Sequence = pool.get('ir.sequence')
         SequenceType = pool.get('ir.sequence.type')
 
+        # Buscar la secuencia SC-XXXXXX; si no existe el número queda vacío
         types = SequenceType.search(
             [('name', '=', 'Solicitud de Compra')], limit=1)
         seq = None
@@ -113,6 +122,8 @@ class PurchaseRequest(ModelSQL, ModelView):
             if seqs:
                 seq = seqs[0]
 
+        # cls.write() acepta pares [lista, valores] encadenados en una sola
+        # llamada para evitar una query UPDATE por registro
         to_write = []
         for request in requests:
             if request.state != 'draft':
@@ -122,7 +133,7 @@ class PurchaseRequest(ModelSQL, ModelView):
                     gettext('purchase_request.msg_lines_required'))
             number = request.number
             if not number and seq:
-                number = seq.get()
+                number = seq.get()  # genera SC-000001, SC-000002, etc.
             to_write.extend([
                 [request],
                 {'state': 'submitted', 'number': number},
@@ -133,6 +144,7 @@ class PurchaseRequest(ModelSQL, ModelView):
     @classmethod
     @ModelView.button
     def approve(cls, requests):
+        # Guarda quién aprobó y cuándo usando el usuario de la sesión activa
         user_id = Transaction().user
         to_write = []
         for request in requests:
@@ -156,6 +168,7 @@ class PurchaseRequest(ModelSQL, ModelView):
         for request in requests:
             if request.state != 'submitted':
                 continue
+            # Motivo obligatorio antes de rechazar
             if not request.rejection_reason:
                 raise UserError(
                     gettext('purchase_request.msg_rejection_reason_required'))
@@ -191,6 +204,7 @@ class PurchaseRequest(ModelSQL, ModelView):
 
     @classmethod
     def delete(cls, requests):
+        # Solo se pueden eliminar solicitudes en Borrador
         for request in requests:
             if request.state != 'draft':
                 raise UserError(
